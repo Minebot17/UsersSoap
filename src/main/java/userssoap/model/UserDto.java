@@ -8,9 +8,6 @@
 
 package userssoap.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,19 +15,18 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for user complex type.
+ * <p>Java class for user_dto complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="user">
+ * &lt;complexType name="user_dto">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="login" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="roles" type="{http://userssoap}role" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -40,34 +36,29 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "user", propOrder = {
+@XmlType(name = "user_dto", propOrder = {
     "login",
     "name",
-    "password",
-    "roles"
+    "password"
 })
-@Entity(name = "users")
-public class User {
+public class UserDto {
 
-    @Id
     @XmlElement(required = true)
-    protected String login;
+    private String login;
 
-    @Column
     @XmlElement(required = true)
-    protected String name;
+    private String name;
 
-    @Column
     @XmlElement(required = true)
-    protected String password;
+    private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_to_roles",
-            joinColumns = @JoinColumn(name = "user_login", referencedColumnName = "login"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    @XmlElement(required = true, name = "role")
-    protected List<Role> roles;
+    public UserDto(){}
+
+    public UserDto(User user) {
+        this.login = user.getLogin();
+        this.name = user.getName();
+        this.password = user.getPassword();
+    }
 
     /**
      * Gets the value of the login property.
@@ -139,35 +130,6 @@ public class User {
      */
     public void setPassword(String value) {
         this.password = value;
-    }
-
-    /**
-     * Gets the value of the roles property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the roles property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getRoles().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Role }
-     * 
-     * 
-     */
-    public List<Role> getRoles() {
-        if (roles == null) {
-            roles = new ArrayList<Role>();
-        }
-        return this.roles;
     }
 
 }

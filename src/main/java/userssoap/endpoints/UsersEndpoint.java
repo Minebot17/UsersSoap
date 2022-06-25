@@ -5,20 +5,64 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import userssoap.model.GetUserRequest;
-import userssoap.model.GetUserResponse;
+import userssoap.model.*;
 import userssoap.orm.UsersRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Endpoint
 public class UsersEndpoint {
 
     private static final String NAMESPACE_URI = "http://userssoap";
 
-    private UsersRepository usersRepository;
+    private final UsersRepository usersRepository;
 
     @Autowired
     public UsersEndpoint(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
+    }
+
+    @ResponsePayload
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createNewUserRequest")
+    public OperationResponse createNewUser(@RequestPayload CreateNewUserRequest request) {
+        usersRepository.save(request.getUser());
+        return new OperationResponse(true);
+    }
+
+    @ResponsePayload
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "editUserRequest")
+    public OperationResponse editUser(@RequestPayload EditUserRequest request) {
+        User foundedUser = usersRepository.findById(request.getUser().getLogin()).orElse(null);
+
+        if (foundedUser == null){
+            return new OperationResponse(false);
+        }
+
+        foundedUser.setName(request.getUser().getName());
+        foundedUser.setPassword(request.getUser().getPassword());
+        foundedUser.getRoles().clear();
+        foundedUser.getRoles().addAll(request.getUser().getRoles());
+        usersRepository.save(foundedUser);
+        return new OperationResponse(true);
+    }
+
+    @ResponsePayload
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeUserRequest")
+    public OperationResponse removeUser(@RequestPayload RemoveUserRequest request){
+        usersRepository.deleteById(request.getLogin());
+        return new OperationResponse(true);
+    }
+
+    @ResponsePayload
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUsersRequest")
+    public GetUsersResponse getUsers(){
+        GetUsersResponse response = new GetUsersResponse();
+        List<UserDto> users = StreamSupport.stream(usersRepository.findAll().spliterator(), false)
+                .map(UserDto::new).collect(Collectors.toList());
+        response.getUsers().addAll(users);
+        return response;
     }
 
     @ResponsePayload

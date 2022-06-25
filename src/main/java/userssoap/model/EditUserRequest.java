@@ -25,7 +25,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="login" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="target_login" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="user" type="{http://userssoap}user"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +37,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "login"
+    "user"
 })
-@XmlRootElement(name = "getUserRequest")
-public class GetUserRequest {
+@XmlRootElement(name = "editUserRequest")
+public class EditUserRequest {
 
     @XmlElement(required = true)
-    protected String login;
+    protected User user;
 
     /**
-     * Gets the value of the login property.
+     * Gets the value of the user property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link User }
      *     
      */
-    public String getLogin() {
-        return login;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * Sets the value of the login property.
+     * Sets the value of the user property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link User }
      *     
      */
-    public void setLogin(String value) {
-        this.login = value;
+    public void setUser(User value) {
+        this.user = value;
     }
 
 }
