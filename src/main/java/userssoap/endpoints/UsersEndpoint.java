@@ -6,8 +6,10 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import userssoap.model.*;
+import userssoap.model.Error;
 import userssoap.orm.UsersRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -27,6 +29,11 @@ public class UsersEndpoint {
     @ResponsePayload
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createNewUserRequest")
     public OperationResponse createNewUser(@RequestPayload CreateNewUserRequest request) {
+        if (usersRepository.findById(request.getUser().getLogin()).isPresent()){
+            return new OperationResponse(false,
+                    new Error(new ArrayList<String>(){{add("User with this login already exists");}}));
+        }
+
         usersRepository.save(request.getUser());
         return new OperationResponse(true);
     }
@@ -37,7 +44,8 @@ public class UsersEndpoint {
         User foundedUser = usersRepository.findById(request.getUser().getLogin()).orElse(null);
 
         if (foundedUser == null){
-            return new OperationResponse(false);
+            return new OperationResponse(false,
+                    new Error(new ArrayList<String>(){{add("User with this login not exists");}}));
         }
 
         foundedUser.setName(request.getUser().getName());
@@ -51,6 +59,11 @@ public class UsersEndpoint {
     @ResponsePayload
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeUserRequest")
     public OperationResponse removeUser(@RequestPayload RemoveUserRequest request){
+        if (!usersRepository.findById(request.getLogin()).isPresent()){
+            return new OperationResponse(false,
+                    new Error(new ArrayList<String>(){{add("User with this login not exists");}}));
+        }
+
         usersRepository.deleteById(request.getLogin());
         return new OperationResponse(true);
     }

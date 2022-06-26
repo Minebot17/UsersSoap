@@ -25,7 +25,6 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     public void addInterceptors(List<EndpointInterceptor> interceptors) {
         CustomValidationInterceptor validatingInterceptor = new CustomValidationInterceptor();
         validatingInterceptor.setValidateRequest(true);
-        validatingInterceptor.setValidateResponse(true);
         validatingInterceptor.setXsdSchema(usersSchema());
         interceptors.add(validatingInterceptor);
     }
