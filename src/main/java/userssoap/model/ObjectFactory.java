@@ -8,16 +8,6 @@
 
 package userssoap.model;
 
-import userssoap.CreateNewUserRequest;
-import userssoap.EditUserRequest;
-import userssoap.GetUserRequest;
-import userssoap.GetUserResponse;
-import userssoap.GetUsersResponse;
-import userssoap.RemoveUserRequest;
-import userssoap.Role;
-import userssoap.User;
-import userssoap.UserDto;
-
 import javax.xml.bind.annotation.XmlRegistry;
 
 
@@ -47,26 +37,26 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link userssoap.EditUserRequest }
+     * Create an instance of {@link EditUserRequest }
      * 
      */
-    public userssoap.EditUserRequest createEditUserRequest() {
+    public EditUserRequest createEditUserRequest() {
         return new EditUserRequest();
     }
 
     /**
-     * Create an instance of {@link userssoap.User }
+     * Create an instance of {@link User }
      * 
      */
-    public userssoap.User createUser() {
+    public User createUser() {
         return new User();
     }
 
     /**
-     * Create an instance of {@link userssoap.GetUserResponse }
+     * Create an instance of {@link GetUserResponse }
      * 
      */
-    public userssoap.GetUserResponse createGetUserResponse() {
+    public GetUserResponse createGetUserResponse() {
         return new GetUserResponse();
     }
 
@@ -79,50 +69,50 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link userssoap.GetUserRequest }
+     * Create an instance of {@link GetUserRequest }
      * 
      */
-    public userssoap.GetUserRequest createGetUserRequest() {
+    public GetUserRequest createGetUserRequest() {
         return new GetUserRequest();
     }
 
     /**
-     * Create an instance of {@link userssoap.CreateNewUserRequest }
+     * Create an instance of {@link CreateNewUserRequest }
      * 
      */
-    public userssoap.CreateNewUserRequest createCreateNewUserRequest() {
+    public CreateNewUserRequest createCreateNewUserRequest() {
         return new CreateNewUserRequest();
     }
 
     /**
-     * Create an instance of {@link userssoap.RemoveUserRequest }
+     * Create an instance of {@link RemoveUserRequest }
      * 
      */
-    public userssoap.RemoveUserRequest createRemoveUserRequest() {
+    public RemoveUserRequest createRemoveUserRequest() {
         return new RemoveUserRequest();
     }
 
     /**
-     * Create an instance of {@link userssoap.GetUsersResponse }
+     * Create an instance of {@link GetUsersResponse }
      * 
      */
-    public userssoap.GetUsersResponse createGetUsersResponse() {
+    public GetUsersResponse createGetUsersResponse() {
         return new GetUsersResponse();
     }
 
     /**
-     * Create an instance of {@link userssoap.UserDto }
+     * Create an instance of {@link UserDto }
      * 
      */
-    public userssoap.UserDto createUserDto() {
+    public UserDto createUserDto() {
         return new UserDto();
     }
 
     /**
-     * Create an instance of {@link userssoap.Role }
+     * Create an instance of {@link Role }
      * 
      */
-    public userssoap.Role createRole() {
+    public Role createRole() {
         return new Role();
     }
 
