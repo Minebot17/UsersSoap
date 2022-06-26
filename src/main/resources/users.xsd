@@ -51,11 +51,13 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:complexType name="operationResponse">
-        <xs:sequence>
-            <xs:element name="success" type="xs:boolean"/>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:element name="operationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="success" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <xs:complexType name="user_dto">
         <xs:sequence>
@@ -69,7 +71,7 @@
         <xs:sequence>
             <xs:element name="login" type="xs:string"/>
             <xs:element name="name" type="xs:string"/>
-            <xs:element name="password" type="xs:string"/>
+            <xs:element name="password" type="tns:passwordString"/>
             <xs:element name="role" type="tns:role" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -77,8 +79,14 @@
     <xs:complexType name="role">
         <xs:sequence>
             <xs:element name="id" type="xs:long"/>
-            <xs:element name="name" type="xs:string"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:simpleType name="passwordString">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(.*[A-Z].*[1-90].*)|(.*[1-90].*[A-Z].*)"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

@@ -49,7 +49,7 @@ public class Role {
     private Long id;
 
     @Column
-    @XmlElement(required = true)
+    @XmlElement
     private String name;
 
     /**
