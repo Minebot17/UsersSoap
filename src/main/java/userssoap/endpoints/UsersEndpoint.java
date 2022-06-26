@@ -9,7 +9,7 @@ import userssoap.model.*;
 import userssoap.model.Error;
 import userssoap.orm.UsersRepository;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -31,7 +31,7 @@ public class UsersEndpoint {
     public OperationResponse createNewUser(@RequestPayload CreateNewUserRequest request) {
         if (usersRepository.findById(request.getUser().getLogin()).isPresent()){
             return new OperationResponse(false,
-                    new Error(new ArrayList<String>(){{add("User with this login already exists");}}));
+                    new Error(Collections.singletonList("User with this login already exists")));
         }
 
         usersRepository.save(request.getUser());
@@ -45,7 +45,7 @@ public class UsersEndpoint {
 
         if (foundedUser == null){
             return new OperationResponse(false,
-                    new Error(new ArrayList<String>(){{add("User with this login not exists");}}));
+                    new Error(Collections.singletonList("User with this login not exists")));
         }
 
         foundedUser.setName(request.getUser().getName());
@@ -61,7 +61,7 @@ public class UsersEndpoint {
     public OperationResponse removeUser(@RequestPayload RemoveUserRequest request){
         if (!usersRepository.findById(request.getLogin()).isPresent()){
             return new OperationResponse(false,
-                    new Error(new ArrayList<String>(){{add("User with this login not exists");}}));
+                    new Error(Collections.singletonList("User with this login not exists")));
         }
 
         usersRepository.deleteById(request.getLogin());
